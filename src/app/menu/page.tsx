@@ -1,1 +1,19 @@
-import type {Metadata} from "next"; import {MENU,SITE} from "@/data/site"; export const metadata:Metadata={title:"Menu | Bubble Tea, Smoothies & Soufflé Pancakes",description:"Browse Sun Tea Mix favorites: fruit tea, milk tea, boba, smoothies, Coco Mango, and soufflé pancakes in Honolulu.",alternates:{canonical:"/menu/"}}; export default function Menu(){return <section className="wrap py-16"><p className="eyebrow">Sun Tea Mix menu</p><h1 className="mt-3">Drinks and desserts for your Honolulu day.</h1><p className="mt-5 max-w-2xl text-lg text-teal-950/70">Menu selections and prices shown as a guide. Check online ordering for the current full menu and availability.</p><a className="button primary mt-7" href={SITE.order}>See current ordering menu</a><div className="mt-14 grid gap-5 md:grid-cols-2">{MENU.map(c=><section className="card" key={c.name}><h2 className="text-3xl">{c.name}</h2><ul className="mt-5 space-y-3">{c.items.map(i=><li className="border-b border-teal-950/10 pb-3" key={i}>{i}</li>)}</ul></section>)}</div></section>}
+import type {Metadata} from "next";
+import {MENU,SITE} from "@/data/site";
+import MenuCatalog from "@/components/MenuCatalog";
+
+export const metadata:Metadata={title:"Menu | Sun Tea Mix",description:"Sun Tea Mix drinks and soufflé pancakes in Honolulu.",alternates:{canonical:"/menu/"}};
+
+export default function Menu(){
+  return <>
+    <section className="sun-hero sun-hero--berry">
+      <div className="wrap py-16 md:py-20">
+        <p className="eyebrow">Sun Tea Mix menu</p>
+        <h1 className="mt-3 max-w-3xl">Drinks and desserts for your Honolulu day.</h1>
+        <p className="mt-5 max-w-2xl text-lg text-teal-950/75">From fruit-forward tea to boba classics and made-to-order soufflé pancakes, choose a little color for your day.</p>
+        <a className="button primary mt-7" href={SITE.order}>Order online</a>
+      </div>
+    </section>
+    <section className="wrap py-16"><MenuCatalog menu={MENU} orderUrl={SITE.order} /></section>
+  </>
+}

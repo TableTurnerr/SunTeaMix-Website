@@ -149,22 +149,23 @@ const ScrollableMenuCards = forwardRef<ScrollableMenuRef, ScrollableMenuCardsPro
               className="w-[300px] flex-shrink-0 overflow-hidden rounded-[12px] text-black sm:w-[386px]"
             >
               {/* Card Image */}
-              <div className="relative h-[240px] w-full cursor-grab active:cursor-grabbing">
-                {/* Preloader overlays the image until loaded, matching shape and fill */}
-                <MediaPreloader
-                  src={item.image}
-                  alt={item.name}
-                  className="absolute top-0 left-0 h-full w-full rounded-[12px] object-cover"
-                  style={{ borderRadius: '12px' }}
-                />
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className="rounded-[12px] object-cover"
-                  style={{ borderRadius: '12px' }}
-                  draggable={false}
-                />
+              <div className="relative h-[240px] w-full cursor-grab rounded-[12px] bg-[#e6faf0] active:cursor-grabbing">
+                {item.image && <>
+                  <MediaPreloader
+                    src={item.image}
+                    alt={item.name}
+                    className="absolute top-0 left-0 h-full w-full rounded-[12px] object-cover"
+                    style={{ borderRadius: '12px' }}
+                  />
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="rounded-[12px] object-cover"
+                    style={{ borderRadius: '12px' }}
+                    draggable={false}
+                  />
+                </>}
               </div>
 
               {/* Card Content */}

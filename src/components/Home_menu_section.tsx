@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from 'react'
 
 import Image from 'next/image';
+import { POPULAR_ITEMS } from '@/data/site';
 
 // import arrow from '@/../public/Svgs/Arrow.svg';
 import ScrollableMenuCards, { ScrollableMenuRef } from './Home_menu_card';
@@ -10,7 +11,7 @@ import ScrollableMenuCards, { ScrollableMenuRef } from './Home_menu_card';
 export interface MenuItem {
   id: string;
   name: string;
-  image: string;
+  image?: string;
   price: string;
   loyaltyPoints: number;
   description: string;
@@ -20,66 +21,22 @@ export interface MenuItem {
 
 export default function Home_menu_section() {
 
-  const popularItems: MenuItem[] = [
-    {
-      id: '1',
-      name: 'Coco Mango',
-      image: '/Images/ProductImg_CocoMango.webp',
-      price: "$ 10.99",
-      loyaltyPoints: 0,
-      description: 'Creamy coconut jelly topped with fresh mango chunks — our signature summer special.',
-      tags: ['With Mango', 'Without Mango'],
-      isFavorite: false,
-    },
-    {
-      id: '2',
-      name: "Brown Sugar Soufflé Pancakes",
-      image: '/Images/ProductImg_BrownSugarSoufflePancakes.webp',
-      price: "$ 11.99",
-      loyaltyPoints: 0,
-      description: 'Fluffy Japanese-style soufflé pancakes drizzled with brown sugar syrup & boba pearls.',
-      tags: ['Pancake', 'Boba Pearls', 'Dessert'],
-      isFavorite: false,
-    },
-    {
-      id: '3',
-      name: 'Classic Milk Tea',
-      image: '/Images/ProductImg_ClassicMilkTea.webp',
-      price: "$ 5.29 / $ 6.29",
-      loyaltyPoints: 0,
-      description: 'Smooth black tea with rich milk — the foundation of every great boba shop.',
-      tags: ['Tea'],
-      isFavorite: true,
-    },
-    {
-      id: '4',
-      name: 'Strawberry Soufflé Pancakes',
-      image: '/Images/ProductImg_StrawberrySoufflePancakes.webp',
-      price: "$ 11.99",
-      loyaltyPoints: 0,
-      description: 'Light, airy pancakes topped with fresh strawberries & cream.',
-      tags: ['Strawberry', 'Pancakes'],
-      isFavorite: false,
-    },
-    {
-      id: '5',
-      name: 'Tropical Lava Flow',
-      image: '/Images/ProductImg_TropicalLavaFlow.webp',
-      price: "$ 7.99",
-      loyaltyPoints: 0,
-      description: 'Refreshing fruit tea layered with strawberry, pineapple, and mango.',
-      tags: ['Fruit Tea', 'Strawberry', 'Pineapple', 'Mango'],
-      isFavorite: false,
-    },
-  ];
+  const popularItems: MenuItem[] = POPULAR_ITEMS.map((item) => ({
+    id: item.slug,
+    name: item.name,
+    image: item.image,
+    price: item.price,
+    loyaltyPoints: 0,
+    description: item.description,
+    tags: item.category.split(' · '),
+  }));
 
 
   const scrollableMenuRef = useRef<ScrollableMenuRef>(null);
   const [isMenuAtEnd, setIsMenuAtEnd] = useState(false);
 
   const handleScrollEndChange = useCallback((isAtEnd: boolean) => {
-    console.log("Parent received isAtEnd:", isAtEnd);
-    setIsMenuAtEnd(isAtEnd);
+      setIsMenuAtEnd(isAtEnd);
   }, []); // Empty dependency array means this function identity is stable
 
   // Function to trigger scroll in the child component
