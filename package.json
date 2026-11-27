@@ -1,44 +1,34 @@
 {
   "name": "sun-tea-mix",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "export": "next export"
+    "export": "next build",
+    "lint": "next lint",
+    "serve-out": "npx serve out"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.27.16",
-    "@rive-app/react-canvas": "^4.25.1",
-    "firebase": "^11.10.0",
-    "framer-motion": "^12.23.26",
-    "next": "16.1.1",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-slick": "^0.30.3",
-    "react-social-media-embed": "^2.5.18",
-    "slick-carousel": "^1.8.1"
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^0.460.0",
+    "next": "15.5.16",
+    "qrcode.react": "^4.2.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@tailwindcss/postcss": "^4.1.18",
-    "@types/node": "^20.19.27",
-    "@types/react": "^19.2.7",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^20.19.39",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/react-slick": "^0.23.13",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.1",
-    "eslint-plugin-functional": "^9.0.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-tailwindcss": "4.0.0-beta.0",
-    "globals": "^17.0.0",
-    "jiti": "^2.6.1",
-    "sass": "^1.97.1",
-    "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.51.0"
+    "eslint": "^9.39.4",
+    "eslint-config-next": "15.5.16",
+    "postcss": "^8.5.14",
+    "svgo": "^4.0.1",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5.9.3"
   }
 }
