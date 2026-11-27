@@ -1,0 +1,13 @@
+{
+  "name": "Sun Tea Mix",
+  "short_name": "Sun Tea Mix",
+  "description": "Boba milk tea, real-fruit tea, cheese foam smoothies and made-to-order soufflé pancakes in Kakaʻako, Honolulu.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0E7F8E",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
