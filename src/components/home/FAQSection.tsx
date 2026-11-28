@@ -67,6 +67,7 @@ export default function FAQSection({
                 key={faq.question}
                 className="border-b border-[var(--color-border)]"
               >
+                <h3 className="m-0 text-base font-normal">
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="w-full flex items-center justify-between gap-6 py-6 text-left group"
@@ -89,6 +90,7 @@ export default function FAQSection({
                     <Plus size={16} strokeWidth={2} />
                   </span>
                 </button>
+                </h3>
                 <div
                   className={`grid transition-all duration-500 ease-out ${
                     isOpen ? "grid-rows-[1fr] opacity-100 pb-6" : "grid-rows-[0fr] opacity-0"
