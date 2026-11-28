@@ -6,7 +6,9 @@ import { BUSINESS } from "@/data/business";
 import { createMetadata } from "@/data/metadata";
 import { SERVICE_CATEGORIES } from "@/data/services";
 import { SPECIALTIES } from "@/data/specialties";
-import { breadcrumbSchema, menuSectionSchema, webPageSchema } from "@/data/schema";
+import { breadcrumbSchema, faqSchema, menuSectionSchema, webPageSchema } from "@/data/schema";
+import { categoryFaqs } from "@/data/answers";
+import FAQSection from "@/components/home/FAQSection";
 import BreadcrumbNav from "@/components/layout/BreadcrumbNav";
 import QuoteCTA from "@/components/shared/QuoteCTA";
 import SchemaInjector from "@/components/shared/SchemaInjector";
@@ -49,10 +51,11 @@ export default async function MenuCategoryPage({ params }: Props) {
   const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Menu", url: "/menu/" }, { name: category.name, url: path }];
   const specialty = SPECIALTIES.find((s) => s.slug === category.specialtySlug);
   const others = SERVICE_CATEGORIES.filter((c) => c.id !== category.id);
+  const faqs = categoryFaqs(category);
 
   return (
     <>
-      <SchemaInjector schema={[breadcrumbSchema(breadcrumbs), webPageSchema({ url: path, name: titleFor(category.name), description: category.description, primaryImage: category.image }), menuSectionSchema(category)]} />
+      <SchemaInjector schema={[breadcrumbSchema(breadcrumbs), webPageSchema({ url: path, name: titleFor(category.name), description: category.description, primaryImage: category.image }), menuSectionSchema(category), faqSchema(faqs)]} />
       <BreadcrumbNav items={breadcrumbs} />
 
       <section className="container-pad pt-5 pb-12 md:pt-8 md:pb-20">
@@ -108,8 +111,10 @@ export default async function MenuCategoryPage({ params }: Props) {
         <p className="mt-6 text-sm text-[var(--color-text-muted)]">Prices are from our online menu and may change.</p>
       </section>
 
-      <section className="bg-[var(--color-warm-white)] py-10">
-        <div className="container-pad">
+      <FAQSection faqs={faqs} eyebrow={`${category.name} at Sun Tea Mix`} title="Quick answers." />
+
+      <section className="container-pad py-10">
+        <div>
           <h2 className="mb-6 text-center">More from the menu</h2>
           <div className="flex flex-wrap gap-2 justify-center">
             {others.map((o) => (

@@ -71,6 +71,8 @@ export default async function SpecialtyPage({
   const related = resolveRelatedServices(specialty.relatedServiceNames);
   const url = `/specialties/${topic}/`;
   const image = specialty.image ?? "/Images/hero.webp";
+  // The quick answer is shown on the page, so it can lead the FAQ structured data too.
+  const allFaqs = [...(specialty.quickAnswer ? [specialty.quickAnswer] : []), ...(specialty.faqs ?? [])];
 
   const schemas = [
     breadcrumbSchema([
@@ -83,9 +85,10 @@ export default async function SpecialtyPage({
       name: specialty.metaTitle,
       description: specialty.metaDescription,
       primaryImage: image,
+      speakable: specialty.quickAnswer ? [".quick-answer"] : undefined,
     }),
     ...(related.length ? [itemListSchema({ name: `${specialty.name} at Sun Tea Mix`, url, items: related })] : []),
-    ...(specialty.faqs && specialty.faqs.length > 0 ? [faqSchema(specialty.faqs)] : []),
+    ...(allFaqs.length > 0 ? [faqSchema(allFaqs)] : []),
   ];
 
   return (
@@ -128,6 +131,16 @@ export default async function SpecialtyPage({
           )}
         </div>
       </section>
+
+      {specialty.quickAnswer && (
+        <section className="container-pad pb-12 md:pb-16" aria-labelledby="quick-answer-q">
+          <div className="quick-answer max-w-3xl rounded-2xl border border-[var(--color-border)] border-l-4 border-l-[var(--color-primary)] bg-white p-6 md:p-8">
+            <div className="eyebrow">Quick answer</div>
+            <h2 id="quick-answer-q" className="text-2xl md:text-3xl mb-3">{specialty.quickAnswer.question}</h2>
+            <p className="text-lg text-[var(--color-text-muted)] leading-relaxed">{specialty.quickAnswer.answer}</p>
+          </div>
+        </section>
+      )}
 
       <section className="bg-[var(--color-warm-white)] section-pad">
         <div className="container-pad max-w-3xl">

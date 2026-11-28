@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createMetadata } from "@/data/metadata";
-import { breadcrumbSchema, webPageSchema } from "@/data/schema";
+import { breadcrumbSchema, faqSchema, webPageSchema } from "@/data/schema";
+import { neighborhoodFaqs } from "@/data/answers";
+import FAQSection from "@/components/home/FAQSection";
 import { NEIGHBORHOODS, NEIGHBORHOOD_SLUGS } from "@/data/neighborhoods";
 import { SPECIALTIES } from "@/data/specialties";
 import { BUSINESS } from "@/data/business";
@@ -44,10 +46,11 @@ export default async function NeighborhoodPage({ params }: Props) {
   const path = `/near/${city}/`;
   const crumbs = [{ name: "Home", url: "/" }, { name: "Near You", url: "/near/" }, { name: area.city, url: path }];
   const isHome = area.slug === "kakaako";
+  const faqs = neighborhoodFaqs(area);
 
   return (
     <>
-      <SchemaInjector schema={[breadcrumbSchema(crumbs), webPageSchema({ url: path, name: titleFor(area.city), description: descriptionFor(area.city, area.distance), primaryImage: area.image })]} />
+      <SchemaInjector schema={[breadcrumbSchema(crumbs), webPageSchema({ url: path, name: titleFor(area.city), description: descriptionFor(area.city, area.distance), primaryImage: area.image }), faqSchema(faqs)]} />
       <BreadcrumbNav items={crumbs} />
       <section className="container-pad py-12 md:py-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -92,8 +95,10 @@ export default async function NeighborhoodPage({ params }: Props) {
         <div className="flex flex-wrap justify-center gap-3"><OrderButton /><ThemeBtn href="/menu/" variant="secondary">See the Menu</ThemeBtn></div>
       </section>
 
-      <section className="bg-[var(--color-warm-white)] py-10">
-        <div className="container-pad">
+      <FAQSection faqs={faqs} eyebrow={isHome ? "Visiting Kakaʻako" : `Coming from ${area.city}`} title="Quick answers." />
+
+      <section className="container-pad py-10">
+        <div>
           <h2 className="mb-6 text-center">Other nearby neighborhoods</h2>
           <div className="flex flex-wrap gap-2 justify-center">
             {NEIGHBORHOODS.filter((o) => o.slug !== area.slug).map((o) => (

@@ -15,6 +15,17 @@ Options -Indexes
 DirectoryIndex index.html
 
 # ----------------------------------------------------------------------
+# | One address for search engines                                     |
+# ----------------------------------------------------------------------
+
+# www.sunteamix.co -> sunteamix.co, so Google sees one site, not two.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.sunteamix\.co$ [NC]
+  RewriteRule ^ https://sunteamix.co%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# ----------------------------------------------------------------------
 # | MIME Types                                                         |
 # ----------------------------------------------------------------------
 
@@ -23,6 +34,7 @@ DirectoryIndex index.html
   AddType application/json .json
   AddType application/javascript .js
   AddType text/css .css
+  AddCharset UTF-8 .html .txt .xml .json
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -104,5 +116,10 @@ DirectoryIndex index.html
   # Cache-Control for HTML files (ensure revalidation)
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+  </FilesMatch>
+
+  # Next.js page-data files (index.txt, __next.*.txt) are for the app, not for search results
+  <FilesMatch "^(index|__next\..*)\.txt$">
+    Header set X-Robots-Tag "noindex"
   </FilesMatch>
 </IfModule>
