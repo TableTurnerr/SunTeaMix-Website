@@ -36,6 +36,9 @@ const openingHoursSpecification = [
   },
 ];
 
+// Profiles that describe the café (a "write a review" link is not a profile).
+const SAME_AS = [BUSINESS.socials.instagram, BUSINESS.socials.yelp, BUSINESS.socials.googleMaps];
+
 const areaServed = BUSINESS.areasServed.map((name) => ({ "@type": "Place", name: `${name}, Honolulu, HI` }));
 
 export function organizationSchema() {
@@ -48,7 +51,7 @@ export function organizationSchema() {
     logo: { "@type": "ImageObject", url: LOGO },
     email: BUSINESS.email,
     telephone: BUSINESS.phone,
-    sameAs: Object.values(BUSINESS.socials),
+    sameAs: SAME_AS,
   };
 }
 
@@ -89,7 +92,7 @@ export function localBusinessSchema() {
     areaServed,
     potentialAction: { "@type": "OrderAction", target: BUSINESS.orderUrl, deliveryMethod: "http://purl.org/goodrelations/v1#DeliveryModePickUp" },
     parentOrganization: { "@id": `${BASE_URL}/#organization` },
-    sameAs: Object.values(BUSINESS.socials),
+    sameAs: SAME_AS,
   };
 }
 
@@ -184,9 +187,9 @@ export function articleSchema({ url, headline, description, image, datePublished
   };
 }
 
-export type WebPageSchemaInput = { url: string; name: string; description: string; primaryImage?: string; dateModified?: string; hasBreadcrumb?: boolean };
+export type WebPageSchemaInput = { url: string; name: string; description: string; primaryImage?: string; dateModified?: string; hasBreadcrumb?: boolean; speakable?: string[] };
 
-export function webPageSchema({ url, name, description, primaryImage, dateModified, hasBreadcrumb = true }: WebPageSchemaInput) {
+export function webPageSchema({ url, name, description, primaryImage, dateModified, hasBreadcrumb = true, speakable }: WebPageSchemaInput) {
   const absoluteUrl = abs(url);
   return {
     "@context": "https://schema.org",
@@ -202,6 +205,7 @@ export function webPageSchema({ url, name, description, primaryImage, dateModifi
     primaryImageOfPage: { "@type": "ImageObject", url: primaryImage ? abs(primaryImage) : PRIMARY_IMAGES[0] },
     dateModified: dateModified ?? new Date().toISOString().slice(0, 10),
     ...(hasBreadcrumb && { breadcrumb: { "@id": `${absoluteUrl}#breadcrumb` } }),
+    ...(speakable && { speakable: { "@type": "SpeakableSpecification", cssSelector: speakable } }),
   };
 }
 

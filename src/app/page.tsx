@@ -12,7 +12,7 @@ import ProjectsStrip from "@/components/home/ProjectsStrip";
 import FAQSection from "@/components/home/FAQSection";
 import OurLocation from "@/components/home/OurLocation";
 import SchemaInjector from "@/components/shared/SchemaInjector";
-import { businessSchema, faqSchema, webPageSchema } from "@/data/schema";
+import { faqSchema, webPageSchema } from "@/data/schema";
 import { FAQS } from "@/data/faqs";
 import { BUSINESS } from "@/data/business";
 
@@ -23,7 +23,6 @@ export default function HomePage() {
     <>
       <SchemaInjector
         schema={[
-          businessSchema(),
           faqSchema(HOME_FAQS),
           webPageSchema({
             url: "/",
